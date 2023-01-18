@@ -7,7 +7,6 @@ export const unpkgPathPlugin = () => {
     setup(build: esbuild.PluginBuild) {
       build.onResolve({ filter: /.*/ }, async (args: any) => {
         let path: string;
-        console.log('onResolve', args);
         if (args.path === 'index.js') {
           path = args.path;
         } else if (args.path.includes('./')) {
@@ -20,8 +19,6 @@ export const unpkgPathPlugin = () => {
       });
 
       build.onLoad({ filter: /.*/ }, async (args: any) => {
-        console.log('onLoad', args);
-
         if (args.path === 'index.js') {
           return {
             loader: 'jsx',
