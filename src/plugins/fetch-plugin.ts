@@ -27,9 +27,27 @@ export const fetchPlugin = (inputCode: string) => {
 
         const { data, request } = await axios.get<string>(args.path);
 
+        const fileType = args.path.match(/.css$/) ? 'css' : 'jsx';
+
+        let contents: string;
+        if (fileType === 'css') {
+          const escaped = data
+            .replace(/\n/g, '')
+            .replace(/"/g, '\\"')
+            .replace(/'/g, "\\'");
+
+          contents = `
+          const style = document.createElement('style');
+          style.innerText = '${escaped}';
+          document.head.appendChild(style);
+        `;
+        } else {
+          contents = data;
+        }
+
         const result: OnLoadResult = {
           loader: 'jsx',
-          contents: data,
+          contents,
           resolveDir: new URL('./', request.responseURL).pathname
         };
 
