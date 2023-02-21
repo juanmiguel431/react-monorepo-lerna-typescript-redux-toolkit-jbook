@@ -4,17 +4,18 @@ import { unpkgPathPlugin } from '../plugins/unpkg-path-plugin';
 import { fetchPlugin } from '../plugins/fetch-plugin';
 
 function App() {
-
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
 
   useEffect(() => {
     const startService = async () => {
+      setLoading(true);
       await esbuild.initialize({
-        // wasmURL: './node_modules/esbuild-wasm/esbuild.wasm', //Uncaught (in promise) Error: wasm validation error: at offset 4: failed to match magic number
-        wasmURL: '/esbuild.wasm',
+        wasmURL: 'https://unpkg.com/esbuild-wasm@0.16.16/esbuild.wasm',
         worker: true
       });
+      setLoading(false);
     };
 
     startService();
@@ -47,7 +48,7 @@ function App() {
       <div>
         <textarea value={input} onChange={e => setInput(e.target.value)}></textarea>
         <div>
-          <button onClick={onClick}>Submit</button>
+          <button onClick={onClick} disabled={loading}>Submit</button>
         </div>
       </div>
       <pre>{code}</pre>
