@@ -5,6 +5,7 @@ import parser from 'prettier/parser-babel';
 import { useRef } from 'react';
 import { editor } from 'monaco-editor';
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
+import './code-editor.css';
 
 interface IProps {
   initialValue?: string;
@@ -40,14 +41,14 @@ const CodeEditor: React.FC<IProps> = ({ initialValue, onChange }) => {
       useTabs: false,
       semi: true,
       singleQuote: true
-    });
+    }).replace(/\n$/, '');
 
     // set the formatted valued back in the editor
     editorRef.current?.setValue(formatted);
   }
 
   return (
-    <div className="code-editor">
+    <div className="code-editor-wrapper">
       <button className="button button-format is-primary is-small" onClick={onFormatClick}>Format</button>
     <MonacoEditor
       value={initialValue}
