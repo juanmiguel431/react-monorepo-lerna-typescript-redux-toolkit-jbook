@@ -2,6 +2,7 @@ import * as esbuild from 'esbuild-wasm';
 import React, { useEffect, useRef, useState } from 'react';
 import { unpkgPathPlugin } from '../plugins/unpkg-path-plugin';
 import { fetchPlugin } from '../plugins/fetch-plugin';
+import CodeEditor from './code-editor';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -73,6 +74,7 @@ function App() {
   return (
     <div className="app">
       <div>
+        <CodeEditor />
         <textarea value={input} onChange={e => setInput(e.target.value)}></textarea>
         <div>
           <button onClick={onClick} disabled={loading}>Submit</button>
