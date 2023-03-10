@@ -29,8 +29,7 @@ const CodeEditor: React.FC<IProps> = ({ initialValue, onChange }) => {
 
     // editor.getModel()?.updateOptions({ tabSize: 2 });
 
-    // @ts-ignore
-    const monacoJSXHighlighter = new MonacoJSXHighlighter(window.monaco, parse, traverse, editor);
+    const monacoJSXHighlighter = new MonacoJSXHighlighter(monaco, parse, traverse, editor);
     monacoJSXHighlighter.highlightOnDidChangeModelContent(100);
   }
 
