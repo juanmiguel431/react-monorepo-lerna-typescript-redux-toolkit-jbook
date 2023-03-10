@@ -6,6 +6,10 @@ import { useRef } from 'react';
 import { editor } from 'monaco-editor';
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 import './code-editor.css';
+import { parse } from '@babel/parser';
+import traverse from '@babel/traverse';
+import MonacoJSXHighlighter from 'monaco-jsx-highlighter';
+import './syntax.css';
 
 interface IProps {
   initialValue?: string;
@@ -24,6 +28,10 @@ const CodeEditor: React.FC<IProps> = ({ initialValue, onChange }) => {
     });
 
     // editor.getModel()?.updateOptions({ tabSize: 2 });
+
+    // @ts-ignore
+    const monacoJSXHighlighter = new MonacoJSXHighlighter(window.monaco, parse, traverse, editor);
+    monacoJSXHighlighter.highlightOnDidChangeModelContent(100);
   }
 
   function onFormatClick() {
@@ -48,26 +56,26 @@ const CodeEditor: React.FC<IProps> = ({ initialValue, onChange }) => {
   }
 
   return (
-    <div className="code-editor-wrapper">
+    <div className="editor-wrapper">
       <button className="button button-format is-primary is-small" onClick={onFormatClick}>Format</button>
-    <MonacoEditor
-      value={initialValue}
-      onMount={onEditorMount}
-      height="500px"
-      language="javascript"
-      theme="vs-dark"
-      options={{
-        wordWrap: 'on',
-        minimap: { enabled: false },
-        showUnused: false,
-        folding: false,
-        lineNumbersMinChars: 3,
-        fontSize: 16,
-        scrollBeyondLastLine: false,
-        automaticLayout: true,
-        tabSize: 2
-      }}
-    />
+      <MonacoEditor
+        value={initialValue}
+        onMount={onEditorMount}
+        height="500px"
+        language="javascript"
+        theme="vs-dark"
+        options={{
+          wordWrap: 'on',
+          minimap: { enabled: false },
+          showUnused: false,
+          folding: false,
+          lineNumbersMinChars: 3,
+          fontSize: 16,
+          scrollBeyondLastLine: false,
+          automaticLayout: true,
+          tabSize: 2
+        }}
+      />
     </div>
   );
 }
