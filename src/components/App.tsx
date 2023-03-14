@@ -1,46 +1,21 @@
-import * as esbuild from 'esbuild-wasm';
-import React, { useEffect, useState } from 'react';
-import { unpkgPathPlugin } from '../plugins/unpkg-path-plugin';
-import { fetchPlugin } from '../plugins/fetch-plugin';
+import React, { useState } from 'react';
 import CodeEditor from './code-editor';
 import Preview from './preview';
+import bundle from '../bundler';
 
 function App() {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
 
-  useEffect(() => {
-    const startService = async () => {
-      setLoading(true);
-      await esbuild.initialize({
-        wasmURL: 'https://unpkg.com/esbuild-wasm@0.16.16/esbuild.wasm',
-        worker: true
-      });
-      setLoading(false);
-    };
-
-    startService();
-  }, []);
-
   const onClick = async () => {
-    // const result = await esbuild.transform(input, {
-    //   loader: 'jsx',
-    //   target: 'es2015'
-    // });
-
-    const build = await esbuild.build({
-      entryPoints: ['index.js'],
-      bundle: true,
-      write: false,
-      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
-      define: {
-        'process.env.NODE_ENV': '"production"',
-        global: 'window',
-      }
-    });
-
-    setCode(build.outputFiles[0].text);
+    try {
+      setLoading(true);
+      const output = await bundle(input);
+      setCode(output);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
