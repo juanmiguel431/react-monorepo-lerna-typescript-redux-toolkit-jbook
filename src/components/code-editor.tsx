@@ -60,7 +60,6 @@ const CodeEditor: React.FC<IProps> = ({ initialValue, onChange }) => {
       <MonacoEditor
         value={initialValue}
         onMount={onEditorMount}
-        height="500px"
         language="javascript"
         theme="vs-dark"
         options={{

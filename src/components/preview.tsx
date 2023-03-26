@@ -35,7 +35,7 @@ export const Preview: React.FC<IPreviewProps> = ({ code }) => {
     iframe.current.srcdoc = html;
 
     setTimeout(() => {
-      if (!(iframe.current && iframe.current.contentWindow)) return;
+      if (!( iframe.current && iframe.current.contentWindow )) return;
       iframe.current.contentWindow.postMessage(code, '*');
     }, 100);
 
@@ -43,7 +43,13 @@ export const Preview: React.FC<IPreviewProps> = ({ code }) => {
 
   return (
     <div className="preview">
-      <iframe title="Preview" ref={iframe} sandbox="allow-scripts allow-modals" srcDoc={html}></iframe>
+      <iframe
+        style={{ backgroundColor: 'white', height: '100%' }}
+        title="Preview"
+        ref={iframe}
+        sandbox="allow-scripts allow-modals"
+        srcDoc={html}
+      />
     </div>
   );
 }
