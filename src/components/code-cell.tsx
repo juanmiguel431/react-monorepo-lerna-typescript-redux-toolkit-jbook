@@ -21,10 +21,12 @@ export const CodeCell: React.FC = () => {
 
   return (
     <div className="code-cell">
-      <Resizable direction="horizontal">
+      <Resizable direction="vertical">
         <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
-          <CodeEditor initialValue="const a = 1;" onChange={setInput}/>
-          {/*<button onClick={onClick} disabled={loading}>Submit</button>*/}
+          <Resizable direction="horizontal">
+            <CodeEditor initialValue="const a = 1;" onChange={setInput}/>
+            {/*<button onClick={onClick} disabled={loading}>Submit</button>*/}
+          </Resizable>
           <Preview code={code}/>
         </div>
       </Resizable>
