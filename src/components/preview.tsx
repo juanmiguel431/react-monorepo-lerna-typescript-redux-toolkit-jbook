@@ -8,8 +8,8 @@ interface IPreviewProps {
 const html = `
 <html lang="en">
   <head>
-  <title>Preview</title>
-</head>
+    <title>Preview</title>
+  </head>
   <body>
     <div id="root"></div>
     <script>

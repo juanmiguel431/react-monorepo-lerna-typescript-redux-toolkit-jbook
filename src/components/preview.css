@@ -9,6 +9,7 @@
     background-color: white;
     height: 100%;
     width: 100%;
+    display: block;
 }
 
 .react-draggable-transparent-selection .preview-wrapper:after {
