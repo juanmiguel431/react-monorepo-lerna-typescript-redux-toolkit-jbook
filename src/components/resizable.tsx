@@ -16,8 +16,14 @@ export const Resizable: React.FC<ResizableProps> = ({ direction, children }) => 
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   useEffect(() => {
+    let timer: any;
     const onResize = () => {
-      setWindowDimensions(getWindowDimensions());
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+        setWindowDimensions(getWindowDimensions());
+      }, 100);
     };
 
     window.addEventListener('resize', onResize);
