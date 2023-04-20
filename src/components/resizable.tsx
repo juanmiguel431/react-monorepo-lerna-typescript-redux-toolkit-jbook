@@ -8,12 +8,13 @@ interface ResizableProps {
 }
 
 const getWindowDimensions = () => {
-  const { innerWidth: width, innerHeight: height } = window;
-  return { width, height, };
+  const { innerWidth, innerHeight } = window;
+  return { innerWidth, innerHeight };
 };
 
 export const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [width, setWidth] = useState(windowDimensions.innerWidth * 0.75);
 
   useEffect(() => {
     let timer: any;
@@ -22,29 +23,38 @@ export const Resizable: React.FC<ResizableProps> = ({ direction, children }) => 
         clearTimeout(timer);
       }
       timer = setTimeout(() => {
-        setWindowDimensions(getWindowDimensions());
+        const windowsDimensions = getWindowDimensions();
+        setWindowDimensions(windowsDimensions);
+
+        const widthConstrained = windowsDimensions.innerWidth * 0.75;
+        if (widthConstrained < width) {
+          setWidth(widthConstrained);
+        }
       }, 100);
     };
 
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, []);
+  }, [width]);
 
   let resizableBoxProps: ResizableBoxProps;
 
   if (direction === 'horizontal') {
     resizableBoxProps = {
       className: 'resize-horizontal',
-      minConstraints: [windowDimensions.width * 0.2, Infinity],
-      maxConstraints: [windowDimensions.width * 0.75, Infinity],
+      minConstraints: [windowDimensions.innerWidth * 0.2, Infinity],
+      maxConstraints: [windowDimensions.innerWidth * 0.75, Infinity],
       height: Infinity,
-      width: windowDimensions.width * 0.75,
-      resizeHandles: ['e']
+      width: width,
+      resizeHandles: ['e'],
+      onResizeStop: (e, data) => {
+        setWidth(data.size.width);
+      }
     };
   } else {
     resizableBoxProps = {
       minConstraints: [Infinity, 100],
-      maxConstraints: [Infinity, windowDimensions.height * 0.9],
+      maxConstraints: [Infinity, windowDimensions.innerHeight * 0.9],
       height: 300,
       width: Infinity,
       resizeHandles: ['s']
