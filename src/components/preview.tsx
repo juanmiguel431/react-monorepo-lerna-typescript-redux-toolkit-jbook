@@ -13,14 +13,22 @@ const html = `
   <body>
     <div id="root"></div>
     <script>
+        const handleError = (e) => {
+            const root = document.getElementById('root');
+            root.innerHTML = '<div style="color: red;"><h4>Runtime error</h4>' + e + '</div>';
+            console.error(e);
+        };
+        
+        window.addEventListener('error', (event) => {
+          event.preventDefault();
+          handleError(event.error);
+        });
+    
         window.addEventListener('message', (event) => {
           try {
             eval(event.data);
           } catch (e) {
-            const root = document.getElementById('root');
-            root.innerHTML = '<div style="color: red;"><h4>Runtime error</h4>' + e + '</div>';
-            console.error(e);
-            throw e;
+            handleError(e);
           }
         }, false);
     </script>
