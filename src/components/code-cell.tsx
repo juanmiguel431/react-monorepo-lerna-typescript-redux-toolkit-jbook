@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CodeEditor from './code-editor';
 import Preview from './preview';
 import bundle from '../bundler';
@@ -9,15 +9,21 @@ export const CodeCell: React.FC = () => {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
 
-  const onClick = async () => {
-    try {
-      setLoading(true);
-      const output = await bundle(input);
-      setCode(output);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      try {
+        setLoading(true);
+        const output = await bundle(input);
+        setCode(output);
+      } finally {
+        setLoading(false);
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
     }
-  }
+  }, [input]);
 
   return (
     <div className="code-cell">
@@ -25,7 +31,6 @@ export const CodeCell: React.FC = () => {
         <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
           <Resizable direction="horizontal">
             <CodeEditor initialValue="const a = 1;" onChange={setInput}/>
-            {/*<button onClick={onClick} disabled={loading}>Submit</button>*/}
           </Resizable>
           <Preview code={code}/>
         </div>
