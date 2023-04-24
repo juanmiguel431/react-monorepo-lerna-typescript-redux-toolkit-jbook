@@ -3,6 +3,7 @@ import './preview.css';
 
 interface IPreviewProps {
   code: string;
+  bundlingStatus: string;
 }
 
 const html = `
@@ -36,7 +37,7 @@ const html = `
 </html>
 `;
 
-export const Preview: React.FC<IPreviewProps> = ({ code }) => {
+export const Preview: React.FC<IPreviewProps> = ({ code, bundlingStatus }) => {
   const iframe = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -58,6 +59,7 @@ export const Preview: React.FC<IPreviewProps> = ({ code }) => {
         sandbox="allow-scripts allow-modals"
         srcDoc={html}
       />
+      {bundlingStatus && <div className="preview-error">{bundlingStatus}</div>}
     </div>
   );
 }

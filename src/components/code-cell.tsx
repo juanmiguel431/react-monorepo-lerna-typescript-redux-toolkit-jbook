@@ -8,13 +8,15 @@ export const CodeCell: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(async () => {
       try {
         setLoading(true);
         const output = await bundle(input);
-        setCode(output);
+        setCode(output.code);
+        setError(output.error);
       } finally {
         setLoading(false);
       }
@@ -32,7 +34,7 @@ export const CodeCell: React.FC = () => {
           <Resizable direction="horizontal">
             <CodeEditor initialValue="const a = 1;" onChange={setInput}/>
           </Resizable>
-          <Preview code={code}/>
+          <Preview code={code} bundlingStatus={error}/>
         </div>
       </Resizable>
     </div>
