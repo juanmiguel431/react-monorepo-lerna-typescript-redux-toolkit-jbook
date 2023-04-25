@@ -1,0 +1,15 @@
+
+.text-editor .w-md-editor-bar svg {
+    display: none;
+}
+
+.text-editor .w-md-editor-bar {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+    height: 10px;
+    cursor: row-resize;
+    background-color: #37414b;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    width: 100%;
+    position: relative;
+}
