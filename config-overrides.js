@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-
+// https://blog.thirdweb.com/guides/how-to-use-polyfills-to-fix-web3-package-dependency-issues/
 module.exports = function override(config) {
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
@@ -18,5 +18,12 @@ module.exports = function override(config) {
       Buffer: ['buffer', 'Buffer']
     })
   ]);
+  config.resolve.extensions.push(".mjs");
+  config.module.rules.push({
+    test: /\.m?js/,
+    resolve: {
+      fullySpecified: false,
+    },
+  });
   return config;
 };
