@@ -1,34 +1,42 @@
 
-import { ActionTypes } from '../action-types';
+// import { ActionType } from '../action-types';
 import { CellTypes } from '../cell';
 
-interface MoveCellAction {
-  type: ActionTypes.MOVE_CELL,
-  payload: {
-    id: string;
-    direction: 'up' | 'down';
-  }
+export type Direction = 'up' | 'down';
+
+export interface MoveCellPayload {
+  id: string;
+  direction: Direction;
 }
 
-interface DeleteCellAction {
-  type: ActionTypes.DELETE_CELL,
-  payload: string;
+// export interface MoveCellAction {
+//   type: ActionType.MOVE_CELL,
+//   payload: MoveCellPayload
+// }
+
+// export interface DeleteCellAction {
+//   type: ActionType.DELETE_CELL,
+//   payload: string;
+// }
+
+export interface InsertCellBeforePayload {
+  id: string | null;
+  type: CellTypes;
 }
 
-interface InsertCellBeforeAction {
-  type: ActionTypes.INSERT_CELL_BEFORE,
-  payload: {
-    id: string;
-    type: CellTypes;
-  }
+// export interface InsertCellBeforeAction {
+//   type: ActionType.INSERT_CELL_BEFORE,
+//   payload: InsertCellBeforePayload
+// }
+
+export interface UpdateCellPayload {
+  id: string;
+  content: string;
 }
 
-interface UpdateCellAction {
-  type: ActionTypes.UPDATE_CELL,
-  payload: {
-    id: string;
-    content: string;
-  }
-}
+// export interface UpdateCellAction {
+//   type: ActionType.UPDATE_CELL,
+//   payload: UpdateCellPayload
+// }
 
-export type Action = MoveCellAction | DeleteCellAction | InsertCellBeforeAction | UpdateCellAction;
+// export type Action = MoveCellAction | DeleteCellAction | InsertCellBeforeAction | UpdateCellAction;
