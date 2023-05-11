@@ -19,7 +19,7 @@ export interface MoveCellPayload {
 //   payload: string;
 // }
 
-export interface InsertCellBeforePayload {
+export interface InsertNewCellPayload {
   id: string | null;
   type: CellTypes;
 }

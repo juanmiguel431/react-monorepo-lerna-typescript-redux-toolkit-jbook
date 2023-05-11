@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Cell } from '../cell';
-import { InsertCellBeforePayload, MoveCellPayload, UpdateCellPayload } from '../actions';
+import { InsertNewCellPayload, MoveCellPayload, UpdateCellPayload } from '../actions';
 
 interface CellsState {
   loading: boolean;
@@ -43,7 +43,7 @@ const cellsSlice = createSlice({
       state.order[index] = state.order[targetIndex];
       state.order[targetIndex] = action.payload.id;
     },
-    insertCellBefore: (state, action: PayloadAction<InsertCellBeforePayload>) => {
+    insertCellBefore: (state, action: PayloadAction<InsertNewCellPayload>) => {
       const cell: Cell = {
         type: action.payload.type,
         content: '',
@@ -58,6 +58,22 @@ const cellsSlice = createSlice({
       } else {
         state.order.splice(foundIndex, 0, cell.id);
       }
+    },
+    insertCellAfter: (state, action: PayloadAction<InsertNewCellPayload>) => {
+      const cell: Cell = {
+        type: action.payload.type,
+        content: '',
+        id: randomId()
+      };
+
+      state.data[cell.id] = cell;
+
+      const foundIndex = state.order.findIndex(a => a === action.payload.id);
+      if (foundIndex === -1) {
+        state.order.unshift(cell.id);
+      } else {
+        state.order.splice(foundIndex + 1, 0, cell.id);
+      }
     }
   },
 });
@@ -66,5 +82,5 @@ const randomId = () => {
   return Math.random().toString(36).substring(2, 5);
 }
 
-export const { updateCell, deleteCell, moveCell, insertCellBefore } = cellsSlice.actions;
+export const { updateCell, deleteCell, moveCell, insertCellBefore, insertCellAfter } = cellsSlice.actions;
 export const cellsReducer = cellsSlice.reducer;

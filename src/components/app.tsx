@@ -1,15 +1,15 @@
 import React from 'react';
-// import CodeCell from './code-cell';
-import TextEditor from './text-editor';
 import { Provider } from 'react-redux';
-import { store } from '../state/store';
+import { store } from '../state';
+import CellList from './cell-list';
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   return (
     <Provider store={store}>
       <div className="app">
-        {/*<CodeCell />*/}
-        <TextEditor/>
+        <CellList />
       </div>
     </Provider>
   );
