@@ -82,5 +82,5 @@ const randomId = () => {
   return Math.random().toString(36).substring(2, 5);
 }
 
-export const { updateCell, deleteCell, moveCell, insertCellBefore, insertCellAfter } = cellsSlice.actions;
+export const actions = cellsSlice.actions;
 export const cellsReducer = cellsSlice.reducer;
