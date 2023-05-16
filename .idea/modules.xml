@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/jbook-old.iml" filepath="$PROJECT_DIR$/.idea/jbook-old.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/jbook.iml" filepath="$PROJECT_DIR$/.idea/jbook.iml" />
     </modules>
   </component>
 </project>
